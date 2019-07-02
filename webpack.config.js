@@ -15,7 +15,7 @@ module.exports = {
   module: {
     //loader“干活”顺序，以及处理哪些文件，都需要在rules指明。
     rules: [
-      //如下规则是：
+      //处理less文件
       {
         test: /\.less$/,//处理所有以.less结尾的文件
         use: [{
