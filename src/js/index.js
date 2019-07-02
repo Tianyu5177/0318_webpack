@@ -1,6 +1,6 @@
 /*
 * 该文件是【webpack的入口文件】，值得注意的是:这个入口文件【不同于模块化中的入口文件】。
-* 该文件可以引入：js  css less 图片 ..........
+* 该入口文件可以引入：js  css less 图片 ..........
 * */
 import {add,sub} from './module1'
 import {mul} from './module2'
