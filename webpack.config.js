@@ -27,7 +27,7 @@ module.exports = {
         }]
       },
 
-      //使用file-loader处理图片资源
+      //使用file-loader处理图片资源（不能动态的转base64编码）
       /*{
         test: /\.(png|jpg|gif)$/,
         use:[
