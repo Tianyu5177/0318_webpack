@@ -11,11 +11,11 @@ module.exports = {
     filename: 'index.js',// 输出文件名
   },
 
-  //所有的loader都要配置在这里
+  //所有的loader都要配置在module里
   module: {
-    //loader“干活”顺序，以及处理哪些文件，都需要在rules指明。
+    //rules中指明loader“干活”的顺序，以及处理哪些文件。
     rules: [
-      //处理less文件
+      //使用less-loader、css-loader、style-loader处理less文件
       {
         test: /\.less$/,//处理所有以.less结尾的文件
         use: [{
