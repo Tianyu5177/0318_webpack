@@ -245,8 +245,8 @@
         引入webppack：const webpack = require('webpack');
         追加一个插件：new webpack.HotModuleReplacementPlugin()
 	6. 存在的问题：改了css、html还得手动刷新才可以，解决如下：
-	7. 【 解决css更新问题】因为css用的是插件，不是loader，所以不行，解决办法：重新使用loader的方式。
-	8. 【 解决html更新问题】因为html也是插件，办法：html依然用插件，追加使用loader，安装：npm i html-loader -D，新增html-loader配置项如下：
+	7. 【 解决css无法模块热更新的问题】因为css用的是插件，不是loader，所以不行，解决办法：重新使用loader的方式。
+	8. 【 解决html无法自动刷新的问题】因为html也是插件，办法：html依然用插件，追加使用loader，安装：npm i html-loader -D，新增html-loader配置项如下：
 	 {
         test: /\.(html)$/,
         use: {
