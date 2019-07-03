@@ -2,8 +2,6 @@
 const path = require('path');
 //引入extract-text-webpack-plugin，用于提取css为单独文件
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-//引入html-webpack-plugin自动生成html，自动引入外部资源
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 //引入clean-webpack-plugin，清空输出的文件夹
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 //引入webpack.common
