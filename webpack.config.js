@@ -1,5 +1,7 @@
 //引入path模块，专门用于解决路径相关问题
 const path = require('path');
+//引入extract-text-webpack-plugin，用于提取css为单独文件
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   //入口（从哪里进入开始解析）
@@ -15,16 +17,28 @@ module.exports = {
   module: {
     //rules中指明loader“干活”的顺序，以及处理哪些文件。
     rules: [
+
+
       //使用less-loader、css-loader、style-loader处理less文件
       {
         test: /\.less$/,//处理所有以.less结尾的文件
-        use: [{
+        //原写法（只用loader）
+        /*use: [
+          {
           loader: "style-loader" // 创建一个style标签，将js中的css放入其中
-        }, {
+        },
+          {
           loader: "css-loader" // 将css以CommonJs语法打包到js中
-        }, {
+        },
+          {
           loader: "less-loader" // 将less转换成css
-        }]
+        }
+        ]*/
+        //新写法（loader配合plugins）
+        use: ExtractTextPlugin.extract({
+            fallback: "style-loader",
+            use: ["css-loader","less-loader"]
+          })
       },
 
       //使用file-loader处理图片资源（不能动态的转base64编码）
@@ -51,12 +65,18 @@ module.exports = {
             options: {
               limit: 8192,  //图片大小的敏感点，大于8KB不转换，小于8KB转成base64
               outputPath:'img',   //图片最终输出的位置
-              publicPath:'../build/img', //css资源图片路径
+              publicPath:'../img', //css资源图片路径
               name:'[hash:5].[ext]'  //修改图片名称
             }
           }
         ]
-      }
+      },
+
     ]
-  }
+  },
+
+  plugins:[
+    //提取css为单独文件
+    new ExtractTextPlugin("./css/index.css") //此处的路径以输出位置为基准
+  ]
 }
