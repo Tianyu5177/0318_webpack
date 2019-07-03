@@ -9,7 +9,7 @@ import data from '../json/data.json';
 import '../less/demo.less';
 
 
-console.log(add(1,2));
+console.log(add(9,2));
 console.log(sub(1,2));
 console.log(mul(1,2));
 console.log(module3.name,module3.age);
