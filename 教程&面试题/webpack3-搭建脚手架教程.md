@@ -121,7 +121,7 @@
 	            options: {
 	              limit: 8192,              
 	              outputPath:'img',         //图片最终输出的位置
-	              publicPath:'./img',		//css资源图片路径
+	              publicPath:'../build/img',//css资源图片路径
                   name:'[hash:5].[ext]'     //修改图片名称
 	            }
 	          }
@@ -131,7 +131,7 @@
 	
 ###9.使用插件提取css,合并为单独的文件
 
-	1. 安装ExtractTextWebpackPluginh插件：npm install extract-text-webpack-plugin --save-D
+	1. 安装ExtractTextWebpackPlugin插件：npm install extract-text-webpack-plugin --save-D
 	2. 引入插件：const ExtractTextPlugin = require("extract-text-webpack-plugin");
 	3. 新增plugins插件配置项，并实例化ExtractTextPlugin插件：
 		plugins: [
@@ -146,6 +146,7 @@
           use: ["css-loader","less-loader"]
         })
        }
+	5.备注：因为css提取成单独文件，不再包含在js中了，所以要修改url-loader配置publicPath:'../build/img'
 ###10.js语法检查
 
 	1. 安装jshint-loader：npm i jshint-loader --save -D

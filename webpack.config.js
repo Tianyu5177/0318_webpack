@@ -2,6 +2,10 @@
 const path = require('path');
 //引入extract-text-webpack-plugin，用于提取css为单独文件
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+//引入html-webpack-plugin自动生成html，自动引入外部资源
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+//引入clean-webpack-plugin，清空输出的文件夹
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 module.exports = {
   //入口（从哪里进入开始解析）
@@ -10,14 +14,13 @@ module.exports = {
   //输出（最终加工完的代码输出到哪里）
   output: {
     path: path.resolve(__dirname, 'build'),//输出文件路径配置
-    filename: 'index.js',// 输出文件名
+    filename: 'js/index.js',// 输出文件名
   },
 
   //所有的loader都要配置在module里,所有的loader在使用的时候，都不用引入。
   module: {
     //rules中指明loader“干活”的顺序，以及处理哪些文件。
     rules: [
-
 
       //使用less-loader、css-loader、style-loader处理less文件
       {
@@ -72,11 +75,55 @@ module.exports = {
         ]
       },
 
+      //使用jshint-loader做语法检查
+      {
+        test: /\.js$/, // 涵盖.js 文件
+        enforce: "pre", // 预先加载好jshint loader
+        exclude: /node_modules/, // 排除掉 node_modules 文件夹下的所有文件
+        use: [
+          {
+            loader: "jshint-loader",
+            options: {
+              //jslint 的错误信息在默认情况下会显示为 warning（警告）类信息
+              //将 emitErrors 参数设置为 true 可使警告显示为 error（错误）类信息
+              emitErrors: false,
+
+              //jshint 默认情况下不会打断webpack编译
+              //如果你想在 jshint 出现错误时，立刻停止编译
+              //请设置 failOnHint 参数为true
+              failOnHint: false,
+              esversion: 6
+            }
+          }
+        ]
+      },
+
+      //使用babel-loader进行es6转es5
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015']
+          }
+        }
+      }
+
     ]
   },
 
+  //插件配置在这里
   plugins:[
     //提取css为单独文件
-    new ExtractTextPlugin("./css/index.css") //此处的路径以输出位置为基准
+    new ExtractTextPlugin("./css/index.css"), //此处的路径以输出位置为基准
+    //自动生成html
+    new HtmlWebpackPlugin({
+      title:"0318",//生成的html文件的title标签
+      filename:"index.html",//生成文件的名字
+      template:"./src/index.html"//这里的路径以配置文件所在文件夹的路径为基准
+    }),
+    //清空输出的文件夹
+    new CleanWebpackPlugin()
   ]
 }
